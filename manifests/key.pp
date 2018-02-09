@@ -27,7 +27,7 @@ define usergpg::key (
     }
   }
   if $user == 'root' { $homedir ='/root'}
-  
+
   if $manage_user {
     @user {$user:
       ensure         => 'present',
@@ -63,10 +63,10 @@ define usergpg::key (
 
   $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/${key_file}"
   exec { "su - ${user}" -c '${command}'":
-    path    => 'usr/bin:/usr/sbin:/bin',
-    creates => "${key_file_path}/.${keyfile}.puppet",
-    timeout => 100,
-    require => File["${key_file_path}/${key_file}"],
-    logoutput   => true,
+    path      => 'usr/bin:/usr/sbin:/bin',
+    creates   => "${key_file_path}/.${keyfile}.puppet",
+    timeout   => 100,
+    require   => File["${key_file_path}/${key_file}"],
+    logoutput => true,
   }
 }
