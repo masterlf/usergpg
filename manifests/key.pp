@@ -75,7 +75,7 @@ define usergpg::key (
     path      => 'usr/bin:/usr/sbin:/bin',
     creates   => "${key_file_path}/.${keyfile}.puppet",
     timeout   => 100,
-    require   => File["${key_file_path}/${key_file}"],
+    require   => File["${key_file_path}/.${key_file}"],
     logoutput => true,
   }
 }
