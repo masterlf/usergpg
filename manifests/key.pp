@@ -62,9 +62,9 @@ define usergpg::key (
   if $secret_key { $secret_key_opt = '--allow-secret-key-import' }
   if $trust_key  {
     case $trust_model {
-      /^(pgp|classic|direct|always|auto)/: {$trust_key_opt  = "--trust ${trust_model}"}
+      /^(pgp|classic|direct|always|auto)/: {$trust_key_opt  = "--trust ${trust_model}" }
       default: {
-        notify { 'PGP trust model available: pgp|classic|direct|always|auto'}
+        notify { 'PGP trust model available: pgp|classic|direct|always|auto': }
         $trust_key_opt = ''
       }
     }
