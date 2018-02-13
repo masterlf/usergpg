@@ -6,7 +6,7 @@ define usergpg::key (
   $user            = undef,
   $uid             = undef,
   $manage_package  = true,
-  $manage_homedir  = true,
+  $manage_homedir  = false,
   $homedir         = "/home/${user}",
   $executable      = '/usr/bin/gpg',
   $ensure          = 'present',
