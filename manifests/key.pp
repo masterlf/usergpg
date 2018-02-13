@@ -71,7 +71,7 @@ define usergpg::key (
   }
 
   $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/.${key_file}"
-  exec { "su - ${user}" -c '${command}'":
+  exec { "su - ${user} -c '${command}'":
     path      => 'usr/bin:/usr/sbin:/bin',
     creates   => "${key_file_path}/.${keyfile}.puppet",
     timeout   => 100,
