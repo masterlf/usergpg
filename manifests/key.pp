@@ -43,7 +43,8 @@ define usergpg::key (
           owner  => $user,
         }
       }
-  }
+    }
+    
   if $manage_package {
     @package {$gpg_package:
       ensure => 'present',
@@ -59,7 +60,15 @@ define usergpg::key (
   }
 
   if $secret_key { $secret_key_opt = '--allow-secret-key-import' }
-  if $trust_key  { $trust_key_opt  = "--trust ${trust_model}" }
+  if $trust_key  {
+    case $trust_model {
+      /^(pgp|classic|direct|always|auto)/: {$trust_key_opt  = "--trust ${trust_model}"}
+      default: {
+        notify { 'PGP trust model available: pgp|classic|direct|always|auto'}
+        $trust_key_opt = ''
+      }
+    }
+  }
 
   $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/${key_file}"
   exec { "su - ${user}" -c '${command}'":
