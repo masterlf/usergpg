@@ -38,7 +38,7 @@ TODO: provide scenario
 ## Reference
 
 TODO
-man [gpgv2](https://linux.die.net/man/1/gpgv2)
+man [gpgv2](https://linux.die.net/man/1/gpg2)
 
 ## Limitations
 
