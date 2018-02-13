@@ -55,7 +55,7 @@ define usergpg::key (
   file {"${key_file_path}/.${key_file}":
     ensure => 'present',
     owner  => $user,
-    mod    => '0640',
+    mode   => '0640',
     source => $key_file_source,
   }
 
