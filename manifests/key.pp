@@ -23,7 +23,7 @@ define usergpg::key (
     $gpg_package = 'gnupg2'
     }
   default: {
-    $gpg_packge = 'gpgv2'
+    $gpg_package = 'gpgv2'
     }
   }
   if $user == 'root' { $homedir ='/root'}
