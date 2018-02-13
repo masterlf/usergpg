@@ -77,5 +77,6 @@ define usergpg::key (
     timeout   => 100,
     require   => File["${key_file_path}/.${key_file}"],
     logoutput => true,
+    returns   => [0, 2], # return 0 when all ok, 2 if key is already in, that is fine.
   }
 }
