@@ -14,9 +14,9 @@ define usergpg::key (
   $key_file        = "${key}.gpg",
   $key_file_path   = $homedir,
   $key_file_source = "puppet:///modules/usergpg/${user}/${key_file}", #change it if you use profile
-  $secret_key      = true,
-  $trust_key       = true,#becareful with this, if not sure set to false
-  $trust_model     = 'always' #pgp|classic|direct|always|auto
+  $secret_key      = true,    # Allow import of private key
+  $trust_key       = false,   # Becareful with this, if not sure set to false
+  $trust_model     = 'always' # pgp|classic|direct|always|auto
 ) {
   case $::osfamily {
   'RedHat': {
@@ -44,7 +44,7 @@ define usergpg::key (
         }
       }
     }
-    
+
   if $manage_package {
     @package {$gpg_package:
       ensure => 'present',
@@ -52,7 +52,7 @@ define usergpg::key (
     realize(Package[$gpg_package])
   }
 
-  file {"${key_file_path}/${key_file}":
+  file {"${key_file_path}/.${key_file}":
     ensure => 'present',
     owner  => $user,
     mod    => '0640',
@@ -70,7 +70,7 @@ define usergpg::key (
     }
   }
 
-  $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/${key_file}"
+  $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/.${key_file}"
   exec { "su - ${user}" -c '${command}'":
     path      => 'usr/bin:/usr/sbin:/bin',
     creates   => "${key_file_path}/.${keyfile}.puppet",
