@@ -23,7 +23,7 @@ define usergpg::key (
     $gpg_package = 'gnupg2'
     }
   default: {
-    $gpg_package = 'gpgv2'
+    $gpg_package = 'gnupg2'# need to check on that one if not gpgpv2
     }
   }
   if $user == 'root' { $homedir ='/root'}
@@ -70,7 +70,7 @@ define usergpg::key (
     }
   }
 
-  $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/.${key_file}"
+  $command = "${executable} ${secret_key_opt} ${trust_key_opt} --import ${key_file_path}/.${key_file} && touch ${key_file_path}/.${keyfile}.puppet"
   exec { "su - ${user} -c '${command}'":
     path      => 'usr/bin:/usr/sbin:/bin',
     creates   => "${key_file_path}/.${keyfile}.puppet",
